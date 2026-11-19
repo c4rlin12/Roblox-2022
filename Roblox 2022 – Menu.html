@@ -144,7 +144,7 @@ a{color:var(--blue);text-decoration:none}
   <div class="pg" id="p-feed"><h2>My Feed</h2><div class="empty">Nothing in your feed yet.</div></div>
   <div class="pg" id="p-trade"><h2>Trade</h2><div class="empty">No trades.</div></div>
   <div class="pg" id="p-avatar"><h2>Avatar</h2><div class="empty">O editor de avatar é a próxima tela.</div></div>
-  <div class="pg" id="p-catalog"><div class="catalog-head"><div><h2>Avatar Catalog</h2><p class="note">Find something that matches your style.</p></div><div class="catalog-avatar"><div class="av" id="catalogAv">R</div><small id="catalogWearing">Nothing equipped</small></div></div><div class="catalog-tools"><input id="catalogSearch" placeholder="Search items..." oninput="renderCatalog()"><div class="catalog-tabs" id="catalogTabs"><button class="cat-tab active" onclick="setCatalogCategory('All',this)">All</button><button class="cat-tab" onclick="setCatalogCategory('Hats',this)">Hats</button><button class="cat-tab" onclick="setCatalogCategory('Hair',this)">Hair</button><button class="cat-tab" onclick="setCatalogCategory('Face',this)">Face</button><button class="cat-tab" onclick="setCatalogCategory('Clothing',this)">Clothing</button><button class="cat-tab" onclick="setCatalogCategory('Accessories',this)">Accessories</button></div></div><div class="catalog-grid" id="catalogGrid"></div></div></div>
+  <div class="pg" id="p-catalog"><div class="catalog-head"><div><h2>Avatar Catalog</h2><p class="note">Find something that matches your style.</p></div><div class="catalog-avatar"><div class="av" id="catalogAv">R</div><small id="catalogWearing">Nothing equipped</small></div></div><div class="catalog-tools"><input id="catalogSearch" placeholder="Search items..." oninput="renderCatalog()"><div class="catalog-tabs" id="catalogTabs"><button class="cat-tab active" onclick="setCatalogCategory('All',this)">All</button><button class="cat-tab" onclick="setCatalogCategory('Hats',this)">Hats</button><button class="cat-tab" onclick="setCatalogCategory('Hair',this)">Hair</button><button class="cat-tab" onclick="setCatalogCategory('Face',this)">Face</button><button class="cat-tab" onclick="setCatalogCategory('Clothing',this)">Clothing</button><button class="cat-tab" onclick="setCatalogCategory('Accessories',this)">Accessories</button></div></div><div class="catalog-grid" id="catalogGrid"></div></div>
   <div class="pg" id="p-settings"><h2>Settings</h2><div class="list"><a>Account Info</a><a>Privacy</a><a>Parents</a><a>Notifications</a></div></div>
  </div>
  <div class="drawer" id="dr"><div class="sh" onclick="drawer(0)"></div><nav>
@@ -190,10 +190,6 @@ function doSignup(){
 // home system
 const GAMES=[["Meep City","#e84393"],["Dodgeball","#f39c12"],["Ultimate Boxing","#2980b9"],["Freeze Tag","#16a085"],["Castle Heart Omega","#8e44ad"],["Roblox High School","#c0392b"],["Epic Minigames","#27ae60"],["Island Royale","#2c3e50"]];
 const card=g=>`<div class="gc"><div class="th" style="background:linear-gradient(145deg,${g[1]},#111a)">${g[0]}</div><span>${g[0]}</span></div>`;
-const FR=["Builderman","Roblox","Shedletsky","Telamon","Stickmasterluke"];
-$('cont').innerHTML=GAMES.slice(0,4).map(card).join('');
-$('rec').innerHTML=GAMES.map(card).join('');
-$('frs').innerHTML=FR.map(n=>`<div class="fr"><div class="av">${n[0]}</div>${n}</div>`).join('');
 const T={home:'Home',profile:'Profile',friends:'Friends',messages:'Messages',avatar:'Avatar',feed:'My Feed',trade:'Trade',catalog:'Catalog',settings:'Settings',notif:'Notifications',search:'Search'};
 function pg(k){document.querySelectorAll('.pg').forEach(e=>e.classList.toggle('on',e.id==='p-'+k));$('ttl').textContent=T[k];
  document.querySelectorAll('#dr nav a[data-p]').forEach(a=>a.classList.toggle('cur',a.dataset.p===k));drawer(0);document.querySelector('.pages').scrollTop=0}
@@ -202,7 +198,7 @@ document.querySelectorAll('#dr nav a[data-p]').forEach(a=>a.onclick=()=>pg(a.dat
 function srch(q){q=q.trim().toLowerCase();if(!q){pg('home');return}
  const r=GAMES.filter(g=>g[0].toLowerCase().includes(q));pg('search');$('ttl').textContent='Search';
  $('res').innerHTML=r.length?r.map(card).join(''):'<div class="empty" style="grid-column:1/3">No results found.</div>'}
-function enter(u){['uname','uname2','uname3'].forEach(i=>$(i).textContent=u);['av1','av2','av3'].forEach(i=>$(i).textContent=u[0].toUpperCase());$('sb').classList.remove('on');$('sq').value='';pg('home');go('home')}
+function enter(u){['uname','uname2','uname3'].forEach(i=>$(i).textContent=u);['av1','av2','av3','catalogAv'].forEach(i=>{const el=$(i);if(el)el.textContent=u[0].toUpperCase()});$('sb').classList.remove('on');$('sq').value='';pg('home');go('home')}
 
 /* Offline avatar catalog */
 const CATALOG_ITEMS=[{id:1,name:"Classic Roblox Cap",category:"Hats",icon:"🧢",price:0,color:"#4b647c"},{id:2,name:"Red Baseball Cap",category:"Hats",icon:"🧢",price:25,color:"#8b3838"},{id:3,name:"Messy Brown Hair",category:"Hair",icon:"💇",price:40,color:"#70513c"},{id:4,name:"Spiky Black Hair",category:"Hair",icon:"🦱",price:50,color:"#303030"},{id:5,name:"Cool Shades",category:"Face",icon:"🕶️",price:15,color:"#45566c"},{id:6,name:"Classic Smile",category:"Face",icon:"🙂",price:0,color:"#b58c4b"},{id:7,name:"Blue T-Shirt",category:"Clothing",icon:"👕",price:10,color:"#3269a8"},{id:8,name:"Red Hoodie",category:"Clothing",icon:"🧥",price:35,color:"#9a3d3d"},{id:9,name:"Golden Wings",category:"Accessories",icon:"🪽",price:100,color:"#9a7b32"},{id:10,name:"Backpack",category:"Accessories",icon:"🎒",price:20,color:"#49664c"},{id:11,name:"Headphones",category:"Accessories",icon:"🎧",price:30,color:"#66518a"},{id:12,name:"Royal Crown",category:"Hats",icon:"👑",price:150,color:"#92712d"}];
