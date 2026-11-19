@@ -292,7 +292,7 @@ async function searchRobloxCatalog(){
 async function loadMoreRobloxCatalog(){if(!robloxCatalogBusy&&robloxCatalogCursor)await fetchRobloxCatalog(true)}
 async function fetchRobloxCatalog(append){
  const marketMode=document.querySelector("#p-market")?.classList.contains("on");const grid=$(marketMode?"marketGrid":"catalogGrid");if(!grid)return;robloxCatalogBusy=true;
- const marketMode=document.querySelector("#p-market")?.classList.contains("on"),keyword=((marketMode?$("marketSearch")?.value:$("catalogSearch")?.value)||"").trim(),rawCat=marketMode?($("marketCategory")?.value||"all").toLowerCase():($("catalogCategory")?.value||"all"),cat=ROBLOX_CATEGORIES[rawCat]||ROBLOX_CATEGORIES.all;
+ const keyword=(($("marketSearch")?.value)||"").trim(),rawCat=($("marketCategory")?.value||"all").toLowerCase(),cat=ROBLOX_CATEGORIES[rawCat]||ROBLOX_CATEGORIES.all;
  const params=new URLSearchParams({Category:String(cat.category),Limit:"30",SortType:"0",SortAggregation:"5"});
  if(cat.subcategory)params.set("Subcategory",String(cat.subcategory));if(keyword)params.set("Keyword",keyword);if(append&&robloxCatalogCursor)params.set("Cursor",robloxCatalogCursor);
  try{
