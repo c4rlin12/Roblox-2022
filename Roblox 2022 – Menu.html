@@ -149,7 +149,6 @@ a{color:var(--blue);text-decoration:none}
   <div class="pg" id="p-trade"><h2>Trade</h2><div class="empty">No trades.</div></div>
   <div class="pg" id="p-avatar"><h2>Avatar</h2><div class="empty">O editor de avatar é a próxima tela.</div></div>
   <div class="pg" id="p-market"><div class="larp-title"><div><h2>Marketplace</h2><p class="note">Live avatar items from the Roblox Marketplace, with local LARP checkout.</p></div><div class="wallet-pill">◆ <span id="marketBalance">0</span></div></div><div class="market-filters"><input id="marketSearch" placeholder="Search Roblox Marketplace..." onkeydown="if(event.key==='Enter')searchRobloxCatalog()" oninput="renderMarket()"><select id="marketCategory" onchange="searchRobloxCatalog()"><option value="all">All categories</option><option value="hats">Hats</option><option value="hair">Hair</option><option value="faces">Faces</option><option value="accessories">Accessories</option><option value="shirts">Shirts</option><option value="pants">Pants</option><option value="gear">Gear</option></select></div><div class="catalog-toolbar"><span id="marketStatus">Connecting to Roblox Marketplace...</span><button class="larp-btn" onclick="searchRobloxCatalog()">Refresh</button></div><div class="market-grid" id="marketGrid"></div></div>
-  <div class="pg" id="p-catalog"><div class="larp-title"><div><h2>Catalog</h2><p class="note">Explore real Roblox avatar items. Purchases here use only your local LARP balance.</p></div><div class="wallet-pill">◆ <span id="catalogBalance">0</span></div></div><div class="market-filters"><input id="catalogSearch" placeholder="Search the Roblox catalog..." onkeydown="if(event.key==='Enter')searchRobloxCatalog()"><select id="catalogCategory" onchange="searchRobloxCatalog()"><option value="all">All items</option><option value="hats">Hats</option><option value="hair">Hair</option><option value="faces">Faces</option><option value="accessories">Accessories</option><option value="shirts">Shirts</option><option value="pants">Pants</option><option value="gear">Gear</option></select></div><div class="catalog-toolbar"><span id="catalogStatus">Loading catalog...</span><button class="larp-btn" onclick="searchRobloxCatalog()">Refresh</button></div><div class="market-grid" id="catalogGrid"></div><button class="larp-btn" id="catalogMore" onclick="loadMoreRobloxCatalog()" hidden>Load more</button></div>
   <div class="pg" id="p-inventory"><h2>Inventory</h2><p class="note">Items you have purchased in this local experience.</p><div class="market-grid" id="inventoryGrid"></div></div>
   <div class="pg" id="p-robux"><h2>Robux Manager</h2><p class="note">Set any balance you want for this offline LARP experience.</p><div class="balance-card"><small>YOUR BALANCE</small><div class="balance-number">◆ <span id="robuxBalance">0</span> R$</div><label for="robuxAmount">New balance</label><input id="robuxAmount" type="number" min="0" step="1" placeholder="Example: 1000000"><button class="larp-btn primary" onclick="setRobux()">Set balance</button><p class="note">This only changes the local simulation. It does not add Robux to a real Roblox account.</p></div></div>
   <div class="pg" id="p-creator"><h2>Item Creator</h2><p class="note">Create custom items that appear in your marketplace.</p><div class="creator-form"><label>Item name</label><input id="newItemName" maxlength="42" placeholder="My awesome hat"><label>Category</label><select id="newItemCategory"><option>Hats</option><option>Faces</option><option>Accessories</option><option>Clothing</option><option>Gear</option></select><label>Price in Robux</label><input id="newItemPrice" type="number" min="0" step="1" placeholder="0"><label>Preview emoji</label><input id="newItemIcon" maxlength="4" placeholder="🎩"><button class="larp-btn primary" onclick="createLarpItem()">Publish item</button><div class="err" id="creatorError"></div></div></div>
@@ -158,7 +157,7 @@ a{color:var(--blue);text-decoration:none}
  </div>
  <div class="drawer" id="dr"><div class="sh" onclick="drawer(0)"></div><nav>
   <div class="dh"><div class="av" id="av3">R</div><div><b id="uname3">Player</b><small>Roblox</small></div></div>
-  <a data-p="home">Home</a><a data-p="profile">Profile</a><a data-p="friends">Friends</a><a data-p="messages">Messages</a><a data-p="avatar">Avatar</a><a data-p="feed">My Feed</a><a data-p="trade">Trade</a><a data-p="catalog">Catalog</a><a data-p="market">Marketplace</a><a data-p="inventory">Inventory</a><a data-p="robux">Robux</a><a data-p="creator">Item Creator</a><a data-p="transactions">Transactions</a><hr><a data-p="settings">Settings</a><a onclick="drawer(0);go('land')">Log Out</a>
+  <a data-p="home">Home</a><a data-p="profile">Profile</a><a data-p="friends">Friends</a><a data-p="messages">Messages</a><a data-p="avatar">Avatar</a><a data-p="feed">My Feed</a><a data-p="trade">Trade</a><a data-p="market">Marketplace</a><a data-p="inventory">Inventory</a><a data-p="robux">Robux</a><a data-p="creator">Item Creator</a><a data-p="transactions">Transactions</a><hr><a data-p="settings">Settings</a><a onclick="drawer(0);go('land')">Log Out</a>
  </nav></div>
 </section>
 
@@ -200,13 +199,13 @@ function doSignup(){
 // home system
 const GAMES=[["Meep City","#e84393"],["Dodgeball","#f39c12"],["Ultimate Boxing","#2980b9"],["Freeze Tag","#16a085"],["Castle Heart Omega","#8e44ad"],["Roblox High School","#c0392b"],["Epic Minigames","#27ae60"],["Island Royale","#2c3e50"]];
 const card=g=>`<div class="gc"><div class="th" style="background:linear-gradient(145deg,${g[1]},#111a)">${g[0]}</div><span>${g[0]}</span></div>`;
-const T={home:'Home',profile:'Profile',friends:'Friends',messages:'Messages',avatar:'Avatar',feed:'My Feed',trade:'Trade',catalog:'Catalog',market:'Marketplace',inventory:'Inventory',robux:'Robux',creator:'Item Creator',transactions:'Transactions',settings:'Settings',notif:'Notifications',search:'Search'};
+const T={home:'Home',profile:'Profile',friends:'Friends',messages:'Messages',avatar:'Avatar',feed:'My Feed',trade:'Trade',market:'Marketplace',inventory:'Inventory',robux:'Robux',creator:'Item Creator',transactions:'Transactions',settings:'Settings',notif:'Notifications',search:'Search'};
 function pg(k){
  document.querySelectorAll('.pg').forEach(e=>e.classList.toggle('on',e.id==='p-'+k));
  $('ttl').textContent=T[k];
  document.querySelectorAll('#dr nav a[data-p]').forEach(a=>a.classList.toggle('cur',a.dataset.p===k));
  drawer(0);document.querySelector('.pages').scrollTop=0;
- if((k==='catalog'||k==='market')&&robloxCatalogResults.length===0&&!robloxCatalogBusy)searchRobloxCatalog();
+ if(k==='market'&&robloxCatalogResults.length===0&&!robloxCatalogBusy)searchRobloxCatalog();
 }
 function drawer(o){$('dr').classList.toggle('on',!!o)}
 document.querySelectorAll('#dr nav a[data-p]').forEach(a=>a.onclick=()=>pg(a.dataset.p));
@@ -287,12 +286,12 @@ function robloxThumb(id){return "https://www.roblox.com/asset-thumbnail/image?as
 function catalogStatus(message){const el=$("catalogStatus");if(el)el.textContent=message}
 async function searchRobloxCatalog(){
  if(robloxCatalogBusy)return;robloxCatalogResults=[];robloxCatalogCursor=null;
- const grid=$("catalogGrid");if(grid)grid.innerHTML='<div class="market-empty">Searching Roblox catalog...</div>';
+ const grid=$("marketGrid");if(grid)grid.innerHTML='<div class="market-empty">Loading Marketplace items...</div>';
  await fetchRobloxCatalog(false);
 }
 async function loadMoreRobloxCatalog(){if(!robloxCatalogBusy&&robloxCatalogCursor)await fetchRobloxCatalog(true)}
 async function fetchRobloxCatalog(append){
- const grid=$("catalogGrid");if(!grid)return;robloxCatalogBusy=true;
+ const marketMode=document.querySelector("#p-market")?.classList.contains("on");const grid=$(marketMode?"marketGrid":"catalogGrid");if(!grid)return;robloxCatalogBusy=true;
  const marketMode=document.querySelector("#p-market")?.classList.contains("on"),keyword=((marketMode?$("marketSearch")?.value:$("catalogSearch")?.value)||"").trim(),rawCat=marketMode?($("marketCategory")?.value||"all").toLowerCase():($("catalogCategory")?.value||"all"),cat=ROBLOX_CATEGORIES[rawCat]||ROBLOX_CATEGORIES.all;
  const params=new URLSearchParams({Category:String(cat.category),Limit:"30",SortType:"0",SortAggregation:"5"});
  if(cat.subcategory)params.set("Subcategory",String(cat.subcategory));if(keyword)params.set("Keyword",keyword);if(append&&robloxCatalogCursor)params.set("Cursor",robloxCatalogCursor);
@@ -304,14 +303,14 @@ async function fetchRobloxCatalog(append){
   renderRobloxCatalog();catalogStatus(robloxCatalogResults.length+" items loaded from Roblox");const ms=$("marketStatus");if(ms)ms.textContent=robloxCatalogResults.length+" live Roblox items";
   const more=$("catalogMore");if(more)more.hidden=!robloxCatalogCursor;
  }catch(err){
-  catalogStatus("Could not connect to Roblox catalog");const ms=$("marketStatus");if(ms)ms.textContent="Roblox catalog unavailable — showing local items";
-  if(!append)grid.innerHTML='<div class="market-empty">The live catalog could not be loaded. Check your connection or try again. The local LARP shop still works.</div>';
+  catalogStatus("Could not connect to Roblox catalog");const ms=$("marketStatus");if(ms)ms.textContent="Marketplace unavailable — try Refresh";
+  if(!append)grid.innerHTML='<div class="market-empty">Marketplace unavailable. Check your connection and try again.</div>';
   const more=$("catalogMore");if(more)more.hidden=true;
   console.warn("Roblox catalog error",err);
  }finally{robloxCatalogBusy=false}
 }
 function catalogItemOwned(item){return larpState.ownedItems.some(x=>Number(x.id)===Number(item.id))}
-function renderRobloxCatalog(){const grid=$("catalogGrid");if(!grid)return;grid.innerHTML=robloxCatalogResults.length?robloxCatalogResults.map(catalogCardHtml).join(""):'<div class="market-empty">No catalog items found for this search.</div>';activate3DCards(grid);renderMarket()}
+function renderRobloxCatalog(){const grid=$("marketGrid");if(!grid)return;grid.innerHTML=robloxCatalogResults.length?robloxCatalogResults.map(catalogCardHtml).join(""):'<div class="market-empty">No Marketplace items found. Try another search.</div>';activate3DCards(grid);syncLarpBalance()}
 function findCatalogItem(id){return robloxCatalogResults.find(x=>Number(x.id)===Number(id))||larpState.ownedItems.find(x=>Number(x.id)===Number(id))}
 function showCatalogDetail(id){
  const item=findCatalogItem(id);if(!item)return;selectedCatalogItem=item;
